@@ -1,6 +1,6 @@
-import Todo from "../components/Todo.js";
-import FormValidator from "../components/FormValidator.js";
 import { initialTodos, validationConfig } from "../utils/constants.js";
+import Todo from "../components/todo.js";
+import FormValidator from "../components/FormValidator.js";
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
 const addTodoButton = document.querySelector(".button_action_add");
@@ -9,19 +9,30 @@ const addTodoForm = addTodoPopup.querySelector(".popup__form");
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
 const todosList = document.querySelector(".todos__list");
 
-const openModal = (modal) => modal.classList.add("popup_visible");
-const closeModal = (modal) => modal.classList.remove("popup_visible");
+const openModal = (modal) => {
+  modal.classList.add("popup_visible");
+};
 
-const validator = new FormValidator(validationConfig, addTodoForm);
-validator.enableValidation();
+const closeModal = (modal) => {
+  modal.classList.remove("popup_visible");
+};
 
-initialTodos.forEach((item) => {
+const formValidator = new FormValidator(validationConfig, addTodoForm);
+formValidator.enableValidation();
+
+function renderTodo(item) {
   const todo = new Todo(item, "#todo-template");
-  todosList.append(todo.getView());
+  const todoElement = todo.getView();
+  todosList.append(todoElement);
+}
+
+addTodoButton.addEventListener("click", () => {
+  openModal(addTodoPopup);
 });
 
-addTodoButton.addEventListener("click", () => openModal(addTodoPopup));
-addTodoCloseBtn.addEventListener("click", () => closeModal(addTodoPopup));
+addTodoCloseBtn.addEventListener("click", () => {
+  closeModal(addTodoPopup);
+});
 
 addTodoForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
@@ -32,17 +43,15 @@ addTodoForm.addEventListener("submit", (evt) => {
   const date = new Date(dateInput);
   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
-  const todo = new Todo(
-    {
-      id: uuidv4(),
-      name,
-      completed: false,
-      date,
-    },
-    "#todo-template"
-  );
+  renderTodo({
+    id: uuidv4(),
+    name,
+    date,
+    completed: false,
+  });
 
-  todosList.append(todo.getView());
+  formValidator.resetValidation();
   closeModal(addTodoPopup);
-  validator.resetValidation();
 });
+
+initialTodos.forEach(renderTodo);

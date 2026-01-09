@@ -36,7 +36,6 @@
   font-size: 20px;
   line-height: 1.2;
 
-  /* Truncate text with ellipses, maximum of two rows. */
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
@@ -73,6 +72,12 @@
 .todo__delete-btn::before {
   content: "Delete";
 }
+
+.todo__delete-btn:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
 
 @media screen and (max-width: 630px) {
   .todo__label {
