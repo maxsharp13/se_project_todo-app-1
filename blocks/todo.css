@@ -1,4 +1,4 @@
-.todo {
+.Todo {
   font-family: Inter, Arial, sans-serif;
   background-color: #f5f5f5;
   border-radius: 8px;
@@ -7,12 +7,12 @@
   gap: 20px;
 }
 
-.todo__label {
+.Todo__label {
   display: flex;
   gap: 12px;
 }
 
-.todo__completed {
+.Todo__completed {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -24,13 +24,13 @@
   cursor: pointer;
 }
 
-.todo__completed:checked {
+.Todo__completed:checked {
   border: none;
   background-size: contain;
   background-image: url(../images/checkbox.svg);
 }
 
-.todo__name {
+.Todo__name {
   font-weight: 500;
   color: #181818;
   font-size: 20px;
@@ -43,7 +43,7 @@
   -webkit-box-orient: vertical;
 }
 
-.todo__date {
+.Todo__date {
   font-weight: 400;
   color: #7d7d7d;
   font-size: 20px;
@@ -51,14 +51,14 @@
   flex-shrink: 0;
 }
 
-.todo__buttons {
+.Todo__buttons {
   margin: 0;
   padding: 0;
   list-style-type: none;
   margin-left: auto;
 }
 
-.todo__delete-btn {
+.Todo__delete-btn {
   border: none;
   padding: 0;
   background-color: transparent;
@@ -69,18 +69,17 @@
   cursor: pointer;
 }
 
-.todo__delete-btn::before {
+.Todo__delete-btn::before {
   content: "Delete";
 }
 
-.todo__delete-btn:hover {
+.Todo__delete-btn:hover {
   opacity: 0.6;
   cursor: pointer;
 }
 
-
 @media screen and (max-width: 630px) {
-  .todo__label {
+  .Todo__label {
     display: grid;
     grid-template-areas:
       "check name delete"
@@ -88,27 +87,27 @@
     gap: 4px 12px;
   }
 
-  .todo__completed {
+  .Todo__completed {
     grid-area: check;
   }
 
-  .todo__name {
+  .Todo__name {
     grid-area: name;
     font-size: 16px;
   }
 
-  .todo__date {
+  .Todo__date {
     grid-area: date;
     font-size: 12px;
   }
 
-  .todo__delete-btn {
+  .Todo__delete-btn {
     background-image: url(../images/delete-icon.svg);
     width: 24px;
     height: 24px;
   }
 
-  .todo__delete-btn::before {
+  .Todo__delete-btn::before {
     content: "";
   }
 }
