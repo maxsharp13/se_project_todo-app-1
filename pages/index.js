@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
 const addTodoButton = document.querySelector(".button_action_add");
 const todosListSelector = ".todos__list";
+const todoTemplateSelector = "#todo-template";
 
 const todoCounter = new TodoCounter(
   initialTodos,
@@ -18,13 +19,28 @@ const todoSection = new Section(
   {
     items: initialTodos,
     renderer: (item) => {
-      const todo = new Todo(item, "#todo-template");
-      const todoElement = todo.getView();
-      todoSection.addItem(todoElement);
-    }
+      renderTodo(item);
+    },
   },
   todosListSelector
 );
+
+function renderTodo(item) {
+  const todo = new Todo(item, todoTemplateSelector, {
+    handleDelete: (wasCompleted) => {
+      todoCounter.updateTotal(false);
+      if (wasCompleted) {
+        todoCounter.updateCompleted(false);
+      }
+    },
+    handleToggle: (isCompleted) => {
+      todoCounter.updateCompleted(isCompleted);
+    },
+  });
+
+  const todoElement = todo.getView();
+  todoSection.addItem(todoElement);
+}
 
 todoSection.renderItems();
 
@@ -38,10 +54,7 @@ const popupWithForm = new PopupWithForm(
       completed: false,
     };
 
-    const todo = new Todo(todoData, "#todo-template");
-    const todoElement = todo.getView();
-
-    todoSection.addItem(todoElement);
+    renderTodo(todoData);
     todoCounter.updateTotal(true);
     popupWithForm.close();
   }

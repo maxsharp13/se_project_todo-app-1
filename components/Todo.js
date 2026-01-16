@@ -1,10 +1,13 @@
 export default class Todo {
-  constructor(data, selector) {
+  constructor(data, selector, { handleDelete, handleToggle }) {
     this._id = data.id;
     this._name = data.name;
     this._completed = data.completed;
     this._date = data.date;
     this._selector = selector;
+
+    this._handleDelete = handleDelete;
+    this._handleToggle = handleToggle;
   }
 
   _getTemplate() {
@@ -44,11 +47,13 @@ export default class Todo {
 
   _setEventListeners() {
     this._deleteBtnEl.addEventListener("click", () => {
+      this._handleDelete(this._completed);
       this._element.remove();
     });
 
     this._checkboxEl.addEventListener("change", () => {
-      this._completed = !this._completed;
+      this._completed = this._checkboxEl.checked;
+      this._handleToggle(this._completed);
     });
   }
 
